@@ -1,20 +1,36 @@
-function ProductList({ products, onDelete }) {
+
+import React from "react";
+
+function ProductList({ products }) {
   return (
-    <div className="product-items">
+    <div>
       <h2>Product List</h2>
 
-      {products.map((product, index) => (
-        <div key={product.id || index}>
-          <h3>{product.name}</h3>
-          <p>Price: ₹{product.price}</p>
-          <p>Category: {product.category}</p>
-          <p>Quantity: {product.quantity}</p>
+      {products.length === 0 ? (
+        <p>No products added yet.</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Category</th>
+            </tr>
+          </thead>
 
-          <button onClick={() => onDelete(product.id)}>
-            Delete
-          </button>
-        </div>
-      ))}
+          <tbody>
+            {products.map((product, index) => (
+              <tr key={product.id}>
+                <td>{index + 1}</td>
+                <td>{product.name}</td>
+                <td>₹{product.price.toFixed(2)}</td>
+                <td>{product.category}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }

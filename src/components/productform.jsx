@@ -1,38 +1,30 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-function ProductForm({ addProduct }) {
+function ProductForm({ onAddProduct }) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
-  const [quantity, setQuantity] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (
-      !name.trim() ||
-      !category.trim() ||
-      price === "" ||
-      quantity === "" ||
-      Number(price) < 0 ||
-      !Number.isInteger(Number(quantity)) ||
-      Number(quantity) < 0
-    ) {
-      alert("Please enter valid product details.");
+    if (!name.trim() || !price || !category.trim()) {
+      alert("Please fill all fields");
       return;
     }
 
-    addProduct({
+    onAddProduct({
+      id: Date.now(),
       name: name.trim(),
       price: Number(price),
-      category: category.trim(),
-      quantity: Number(quantity),
+      category: category.trim()
     });
 
     setName("");
     setPrice("");
     setCategory("");
-    setQuantity("");
+
+    alert("Product added successfully!");
   };
 
   return (
@@ -50,10 +42,10 @@ function ProductForm({ addProduct }) {
       <input
         type="number"
         placeholder="Product Price"
-        min="0"
-        step="0.01"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
+        min="0.01"
+        step="0.01"
         required
       />
 
@@ -62,16 +54,6 @@ function ProductForm({ addProduct }) {
         placeholder="Product Category"
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-        required
-      />
-
-      <input
-        type="number"
-        placeholder="Product Quantity"
-        min="0"
-        step="1"
-        value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
         required
       />
 

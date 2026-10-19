@@ -1,16 +1,16 @@
-import { useState } from "react";
-import ProductForm from "./ProductForm";
-import ProductList from "./ProductList";
-import productitem from "./productitem";
+
+import React, { useState } from "react";
+import ProductForm from "./components/Productform";
+import ProductList from "./components/Productlist";
 import "./App.css";
 
 function App() {
   const [products, setProducts] = useState([]);
 
   const addProduct = (product) => {
-    setProducts((prevProducts) => [
-      ...prevProducts,
-      { ...product, id: Date.now() },
+    setProducts((previousProducts) => [
+      ...previousProducts,
+      product
     ]);
   };
 
@@ -18,7 +18,7 @@ function App() {
     <div className="container">
       <h1>Product Management System</h1>
 
-      <ProductForm addProduct={addProduct} />
+      <ProductForm onAddProduct={addProduct} />
 
       <ProductList products={products} />
     </div>
